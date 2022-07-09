@@ -13,12 +13,19 @@ export const getBoard = async (req: Request, res: Response) => {
   const id = parseInt(req.params['id'])
   const board = await prisma.board.findUnique({
     where: { id },
-    include: { 
-      columns: { 
-        include: { 
-          tasks: true 
-        } 
-      } 
+    include: {
+      columns: {
+        orderBy: {
+          position: 'asc'
+        },
+        include: {
+          tasks: {
+            orderBy: {
+              position: 'asc'
+            },
+          }
+        }
+      }
     }
   })
   res.json({ data: board })
@@ -51,7 +58,7 @@ export const createBoard = async (req: Request, res: Response) => {
       position: 2,
       boardId: result.id
     }
-    
+
   ]
   await Promise.all(
     defaultColumns.map(async (col) => {
