@@ -8,7 +8,7 @@ export const getAllBoards = async (req: Request, res: Response) => {
   res.json({ data: boards })
 }
 
-// Get Board by id
+// Get Board by id, with columns and tasks
 export const getBoard = async (req: Request, res: Response) => {
   const id = parseInt(req.params['id'])
   const board = await prisma.board.findUnique({
