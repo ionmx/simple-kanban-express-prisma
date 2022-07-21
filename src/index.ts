@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { getAllBoards, getBoard, createBoard } from './api/boards'
+import { getAllBoards, getBoard, createBoard, deleteBoard } from './api/boards'
 import { createColumn, moveColumn } from './api/columns'
 import { createTask, moveTask } from './api/tasks'
 
@@ -13,6 +13,7 @@ app.use(cors())
 app.post(`/api/v1/boards`, createBoard)
 app.get(`/api/v1/boards`, getAllBoards)
 app.get(`/api/v1/boards/:id`, getBoard)
+app.delete(`/api/v1/boards/:id`, deleteBoard)
 
 // Column routes
 app.post(`/api/v1/boards/:board_id/columns`, createColumn)

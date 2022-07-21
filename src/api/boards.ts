@@ -69,3 +69,12 @@ export const createBoard = async (req: Request, res: Response) => {
   )
   res.json({ data: result })
 }
+
+// Delete Board
+export const deleteBoard = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const result = await prisma.board.delete({
+    where: { id }
+  })
+  res.json({ data: result })
+}
