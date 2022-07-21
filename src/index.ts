@@ -27,6 +27,8 @@ app.post(`/api/v1/boards/:board_id/columns/:column_id/tasks`, createTask)
 app.post(`/api/v1/boards/:board_id/move-task`, moveTask)
 app.delete(`/api/v1/boards/:board_id/columns/:column_id/tasks/:id`, deleteTask)
 app.patch(`/api/v1/boards/:board_id/columns/:column_id/tasks/:id`, updateTask)
+
+// Start server
 const server = app.listen(4000, () =>
   console.log(`Server ready at: http://localhost:4000`),
 )
