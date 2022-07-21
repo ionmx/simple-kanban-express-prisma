@@ -65,3 +65,12 @@ export const moveTask = async (req: Request, res: Response) => {
   
 }
 
+// Delete Task
+export const deleteTask = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const result = await prisma.task.delete({
+    where: { id }
+  })
+  res.json({ data: result })
+}
+

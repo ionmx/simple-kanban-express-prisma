@@ -59,3 +59,12 @@ export const moveColumn = async (req: Request, res: Response) => {
   res.json({ data: null })
   
 }
+
+// Delete Column
+export const deleteColumn = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const result = await prisma.column.delete({
+    where: { id }
+  })
+  res.json({ data: result })
+}
