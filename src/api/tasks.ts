@@ -74,3 +74,14 @@ export const deleteTask = async (req: Request, res: Response) => {
   res.json({ data: result })
 }
 
+// Update Task
+export const updateTask = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const { description } = req.body
+  const result = await prisma.task.update({
+    where: { id },
+    data: { description }
+  })
+  res.json({ data: result })
+}
+

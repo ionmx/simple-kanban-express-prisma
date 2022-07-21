@@ -68,3 +68,14 @@ export const deleteColumn = async (req: Request, res: Response) => {
   })
   res.json({ data: result })
 }
+
+// Update Column
+export const updateColumn = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const { title } = req.body
+  const result = await prisma.column.update({
+    where: { id },
+    data: { title }
+  })
+  res.json({ data: result })
+}

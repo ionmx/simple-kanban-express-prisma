@@ -78,3 +78,17 @@ export const deleteBoard = async (req: Request, res: Response) => {
   })
   res.json({ data: result })
 }
+
+// Update Board
+export const updateBoard = async (req: Request, res: Response) => {
+  const id = parseInt(req.params['id'])
+  const { title, description } = req.body
+  const result = await prisma.board.update({
+    where: { id },
+    data: {
+      title,
+      description
+    }
+  })
+  res.json({ data: result })
+}
