@@ -15,7 +15,7 @@ export const createColumn = async (req: Request, res: Response) => {
     }
   })
 
-  if (columnAggregate._max.position) {
+  if (columnAggregate._max.position !== null) {
     position = columnAggregate._max.position + 1
   }
 
@@ -28,16 +28,12 @@ export const createColumn = async (req: Request, res: Response) => {
 // Move Column
 export const moveColumn = async (req: Request, res: Response) => {
   const boardId = parseInt(req.params['board_id'])
-  const id = parseInt(req.params['id'])
   const { column, position } = req.body
 
   const col = await prisma.column.findUnique({
     where: { id: column }
   })
 
-  console.log(col)
-  console.log(column)
-  console.log(position)
   if (col) {
     // Update source positions
     await prisma.column.updateMany({
@@ -63,11 +59,3 @@ export const moveColumn = async (req: Request, res: Response) => {
   res.json({ data: null })
   
 }
-
-
-// Column.where("board_id = ? AND position > ?", @column.board_id, @column.position)
-//           .update_all("position = position - 1")
-
-//     # Update destination positions
-//     Column.where("board_id = ? AND position >= ?", @column.board_id, params["position"])
-//           .update_all("position = position + 1")
