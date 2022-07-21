@@ -16,7 +16,7 @@ app.get(`/api/v1/boards/:id`, getBoard)
 
 // Column routes
 app.post(`/api/v1/boards/:board_id/columns`, createColumn)
-app.post(`/api/v1/boards/:board_id/columns/:id`, moveColumn)
+app.post(`/api/v1/boards/:board_id/move-column`, moveColumn)
 
 // Task routes
 app.post(`/api/v1/boards/:board_id/columns/:column_id/tasks`, createTask)

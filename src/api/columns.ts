@@ -29,15 +29,19 @@ export const createColumn = async (req: Request, res: Response) => {
 export const moveColumn = async (req: Request, res: Response) => {
   const boardId = parseInt(req.params['board_id'])
   const id = parseInt(req.params['id'])
-  const { position } = req.body
-  const column = await prisma.column.findUnique({
-    where: { id }
+  const { column, position } = req.body
+
+  const col = await prisma.column.findUnique({
+    where: { id: column }
   })
 
-  if (column) {
+  console.log(col)
+  console.log(column)
+  console.log(position)
+  if (col) {
     // Update source positions
     await prisma.column.updateMany({
-      where: { boardId: boardId, position: { gt: column.position } },
+      where: { boardId: boardId, position: { gt: col.position } },
       data: { position: { decrement: 1 } }
     })
     // Update target positions
@@ -45,6 +49,25 @@ export const moveColumn = async (req: Request, res: Response) => {
       where: { boardId: boardId, position: { gte: position } },
       data: { position: { increment: 1 } }
     })
+
+    const updatedCol = await prisma.column.update({
+      where: {
+        id: column,
+      },
+      data: {
+        position: position
+      },
+    })
+    res.json({ data: updatedCol })
   }
-  res.json({ data: column })
+  res.json({ data: null })
+  
 }
+
+
+// Column.where("board_id = ? AND position > ?", @column.board_id, @column.position)
+//           .update_all("position = position - 1")
+
+//     # Update destination positions
+//     Column.where("board_id = ? AND position >= ?", @column.board_id, params["position"])
+//           .update_all("position = position + 1")
