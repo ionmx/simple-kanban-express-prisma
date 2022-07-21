@@ -5,8 +5,22 @@ import { Request, Response } from 'express'
 export const createColumn = async (req: Request, res: Response) => {
   const boardId = parseInt(req.params['board_id'])
   const { title } = req.body
+  let position = 0
+  const columnAggregate = await prisma.column.aggregate({
+    _max: {
+      position: true
+    },
+    where: {
+      boardId: boardId
+    }
+  })
+
+  if (columnAggregate._max.position) {
+    position = columnAggregate._max.position + 1
+  }
+
   const result = await prisma.column.create({
-    data: { title, boardId: boardId }
+    data: { title, boardId: boardId, position: position }
   })
   res.json({ data: result })
 }
